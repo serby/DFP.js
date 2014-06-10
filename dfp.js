@@ -1,5 +1,5 @@
 /**
- * DFP.js 1.0.0
+ * DFP.js 1.1.0
  * 
  * Copyright (c) 2013 Cameron Terry
  * 
@@ -49,7 +49,7 @@ googletag.cmd = googletag.cmd || [];
         targeting_all : [],
         zone : '',
         defineSlots : function () {
-            $( 'div[rel="advert"][data-ad-complete!="yes"]' ).each( function () {
+            $( 'div[rel="advert"][data-ad-complete!="yes"]:visible' ).each( function () {
                 var $this = $( this );
                 var id = dfp.getID( $this );
                 var advert = googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
