@@ -4,6 +4,19 @@ Built from hard knocks and frustration over several years of trying to get it to
 
 The DFP.js to library aim is simplify the implementation of DFP and provide some much needed flexibility when advertising managers decide to have random positions or random sizes!
 
+# Releases
+
+## Release 1.1.0
+
+* Define Slots now checks to see if the advert is visible so that different slots can be defined in responsive designs.
+* Added a minified version of the dfp.js file.
+* Fixed an inaccuracy in the documentation for "Set Targeting for a Single Slot".
+* Removed the dfp.display() call in "JavaScript Execute" of the Readme as it's not actually needed.
+
+## Release 1.0.0
+
+Initial Release.
+
 # Dependencies
 
 This JavaScript only has a single hard dependency; jQuery.  It is not a jQuery plugin but makes use of several jQuery methods to simplify the implementation.
@@ -50,7 +63,6 @@ And make sure the following JavaScript is either in the head or above the `</bod
          * Execute DFP cycle - both methods need to be called to get the ads on the page to serve.
          */
         dfp.enable();
-        dfp.display();
     } );
 } )( jQuery );
 ```
@@ -110,11 +122,11 @@ That's achieved by adding the `data-targeting="pos=top"` attribute to the `<div 
 <div rel="advert" data-sizes="300x250" data-targeting="pos=top"></div>
 ```
 
-Multiple targeting options can be specified by separating them with a comma.
+Multiple targeting options can be specified by separating them with a pipe (|) and multiple values can be specified by separating them with a comma.
 
 ```html
-<div rel="advert" data-sizes="300x250" data-targeting="pos=top,gender=male,age=20-30"></div>
-<div rel="advert" data-sizes="300x250" data-targeting="x=right,y=top"></div>
+<div rel="advert" data-sizes="300x250" data-targeting="pos=top|gender=male|interests=sports,music,movies"></div>
+<div rel="advert" data-sizes="300x250" data-targeting="x=right|y=top"></div>
 ```
 
 ### Dynamic Ads
