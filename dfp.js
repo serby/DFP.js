@@ -105,10 +105,13 @@ googletag.cmd = googletag.cmd || [];
             dfp.defineSlots();
 
             var ad_slot_ids = dfp.display();
+            var ad_slots = [];
 
             for ( var i = 0; i < ad_slot_ids.length; ++i ) {
-                dfp.refresh( ad_slot_ids[i] );
+                ad_slots.push( dfp.ad_slots[ad_slot_ids[i]] );
             }
+
+            googletag.pubads().refresh( ad_slots );
         },
         display : function () {
             var return_val = [];
