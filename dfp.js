@@ -52,7 +52,14 @@ googletag.cmd = googletag.cmd || [];
             $( 'div[rel="advert"][data-ad-complete!="yes"]:visible' ).each( function () {
                 var $this = $( this );
                 var id = dfp.getID( $this );
-                var advert = googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
+                var advert = null;
+
+                if ( 'yes' === $this.data( 'oop' ) ) {
+                    googletag.defineOutOfPageSlot( dfp.network + dfp.zone, id );
+                }
+                else {
+                    googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
+                }
                 
                 dfp.setTargetingSingle( $this.data( 'targeting' ), advert );
                 dfp.setCompanionSingle( $this.data( 'companion' ), advert );
