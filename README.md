@@ -6,6 +6,12 @@ The DFP.js to library aim is simplify the implementation of DFP and provide some
 
 # Releases
 
+## Release 1.2.0
+
+* Added support for Out of Page slots which can be defined by using the data-oop="yes" attribute instead of data-sizes="".
+* [Bug Fix] Fixed a race condition when using dfp.cycle() on AJAX content which put the wrong sizes into the wrong slots.
+* Added an example of an Out of Page slot to the HTML Ad Slots.
+
 ## Release 1.1.0
 
 * Define Slots now checks to see if the advert is visible so that different slots can be defined in responsive designs.
@@ -43,6 +49,7 @@ Place a piece of HTML like the below where you wish the adverts to appear on the
 ```html
 <div rel="advert" data-sizes="728x90"></div>
 <div rel="advert" data-sizes="300x250"></div>
+<div rel="advert" data-oop="yes"></div>
 ```
 
 ### JavaScript Execute
