@@ -1,5 +1,5 @@
 /**
- * DFP.js 1.1.0
+ * DFP.js 1.2.0
  * 
  * Copyright (c) 2013 Cameron Terry
  * 
