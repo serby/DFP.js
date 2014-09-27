@@ -55,10 +55,10 @@ googletag.cmd = googletag.cmd || [];
                 var advert = null;
 
                 if ( 'yes' === $this.data( 'oop' ) ) {
-                    googletag.defineOutOfPageSlot( dfp.network + dfp.zone, id );
+                    advert = googletag.defineOutOfPageSlot( dfp.network + dfp.zone, id );
                 }
                 else {
-                    googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
+                    advert = googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
                 }
                 
                 dfp.setTargetingSingle( $this.data( 'targeting' ), advert );
