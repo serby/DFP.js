@@ -1,5 +1,5 @@
 /**
- * DFP.js 1.2.0
+ * DFP.js 1.3.0
  * 
  * Copyright (c) 2013 Cameron Terry
  * 
@@ -168,10 +168,17 @@ googletag.cmd = googletag.cmd || [];
             googletag.pubads().refresh();
         },
         takeover : function ( data ) {
+            var $body = $( 'body' );
+
             var $link = $( '<a class="takeover" href="' + data.url + '" target="_blank"></a>' );
             $link.css( 'background-image', 'url(' + data.image + ')' );
 
-            $( 'body' ).prepend( $link );
+            /** Check for a tracker and if so, then create an image tag. */
+            if ( data.impressiontracker && '' !== $.trim( data.impressiontracker ) ) {
+                $body.prepend( '<img src="' + data.impressiontracker + '" style="display:none;" />' );
+            }
+
+            $body.prepend( $link );
         }
     };
 
