@@ -6,6 +6,10 @@ The DFP.js to library aim is simplify the implementation of DFP and provide some
 
 # Releases
 
+## Release 1.3.0
+
+* Added additional logic for impression trackers to be provided on Site Skins.
+
 ## Release 1.2.0
 
 * Added support for Out of Page slots which can be defined by using the data-oop="yes" attribute instead of data-sizes="".
