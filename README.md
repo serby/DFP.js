@@ -6,6 +6,16 @@ The DFP.js to library aim is simplify the implementation of DFP and provide some
 
 # Releases
 
+## Release 1.4.0 - Events
+
+* Added support for Google Publisher Tag "SlotRenderEndedEvent"
+  * https://developers.google.com/doubleclick-gpt/reference#googletageventsslotrenderendedevent
+* Created a collection of events which can be used by theme developers to react to adverts once rendered.
+  * window.dfp.complete - fires once all ad slots are rendered on the page.
+  * window.dfp.slot_rendered - fires when an individual ad slot is rendered. The event data includes the ad slot element as a jQuery object.
+  * $( ad_slot_el ).on( 'rendered' ) - same as slot_rendered but specific to an ad slot element.
+* Readme updated to include new code.
+
 ## Release 1.3.0
 
 * Added additional logic for impression trackers to be provided on Site Skins.
@@ -151,6 +161,51 @@ $.ajax( {
 } ).done( function( html ) {
 	$( "#results" ).append( html );
 	dfp.cycle();
+} );
+```
+
+### All Advert Events
+
+```javascript
+$( document ).ready( function () {
+    /** Runs when all adverts are rendered. There is no arguments passed. */
+    $( window.dfp ).on( 'complete', function () {
+        console.log( 'Rejoice - all adverts on screen!' );
+    } );
+
+    /** Ad slot rendered. */
+    $( window.dfp ).on( 'slot_renderd', function ( data ) {
+        console.log( '3 elements of ads on the website, 3 elements of ads.' );
+
+        /** jQuery object on the ad slot DOM element. */
+        console.log( data.el );
+    } );
+} );
+```
+
+### Ad Specific Events
+
+In order to make use of these events, it is best practice to manually specify an element ID for the HTML like so;
+
+```html
+<div id="myAD" rel="advert" data-sizes="300x250,300x600"></div>
+```
+
+And then target with events as follows;
+
+```javascript
+$( document ).ready( function () {
+    /** Runs when the specific slot is empty */
+    $( '#myAD' ).on( 'empty', function ( data ) {
+        console.log( 'I need to sell more ads :-(' );
+    } );
+
+    /** Runs when the specific slot is rendered. */
+    $( '#myAD' ).on( 'rendered', function ( data ) {
+        if ( 600 === $( this ).height() ) {
+            // change my layout for the bigger advert.
+        }
+    } );
 } );
 ```
 
