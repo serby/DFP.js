@@ -1,5 +1,5 @@
 /**
- * DFP.js 1.3.0
+ * DFP.js 1.4.0
  * 
  * Copyright (c) 2013 Cameron Terry
  * 
@@ -44,7 +44,10 @@ googletag.cmd = googletag.cmd || [];
      */
     var dfp = {
         collapsable : false,
+        video : false,
         ad_slots : [],
+        ad_slots_requested : 0,
+        ad_slots_rendered : 0,
         network : '',
         targeting_all : [],
         zone : '',
@@ -65,8 +68,16 @@ googletag.cmd = googletag.cmd || [];
                 dfp.setCompanionSingle( $this.data( 'companion' ), advert );
 
                 advert.addService( googletag.pubads() );
+                dfp.ad_slots_requested++;
                 dfp.ad_slots[id] = advert;
             });
+        },
+        get : function ( slot ) {
+            for ( var id in dfp.ad_slots ) {
+                if ( slot === dfp.ad_slots[id] ) {
+                    return $( '#' + id );
+                }
+            }
         },
         getID : function ( el ) {
             if ( el.attr( 'id' ) ) {
@@ -149,6 +160,56 @@ googletag.cmd = googletag.cmd || [];
                  * is a pre-requisite for Companion Ads.
                  */
                 googletag.pubads().enableSingleRequest();
+
+                /**
+                 * Hooking event logic so developers can do post ad rendering logic.
+                 *
+                 * https://developers.google.com/doubleclick-gpt/reference#googletag.Service_addEventListener
+                 */
+                googletag.pubads().addEventListener( 'slotRenderEnded', function( slot_data ) {
+                    dfp.ad_slots_rendered++;
+
+                    /** 
+                     * Retrieve the actual HTML element attached to the slot. This is used to
+                     * return as part of the event trigger as well as to trigger events on the
+                     * actual slot itself, so developer's can target an advert specifically
+                     * after it is loaded.
+                     */
+                    var $slot_element = dfp.get( slot_data.slot );
+
+                    /**
+                     * Construct the callback data object.
+                     */
+                    var callback_data = {
+                        creative_id : slot_data.creativeId,
+                        is_empty : slot_data.isEmpty,
+                        el : $slot_element,
+                        line_item_id : slot_data.lineItemId,
+                        size : slot_data.size,
+                    };
+
+                    var render_event = $.Event( 'rendered' );
+                    /** Fire the event for the actual advert element being rendered. */
+                    $slot_element.trigger( render_event, slot_data );
+
+                    /**
+                     * Save other developers of adverts is empty if statements and fire a
+                     * separate event.
+                     */
+                    if ( slot_data.isEmpty ) {
+                        var empty_event = $.Event( 'empty' );
+                        $slot_element.trigger( empty_event, slot_data );
+                    }
+
+                    /** Catch all event to say an ad slot is rendered. */
+                    $( window.dfp ).trigger( 'slot_rendered', slot_data );
+
+                    console.log( dfp.ad_slots_rendered === dfp.ad_slots_requested, dfp.ad_slots_rendered, dfp.ad_slots_requested );
+                    /** Trigger an event which says all Ads on the page have been rendered. */
+                    if ( dfp.ad_slots_rendered === dfp.ad_slots_requested ) {
+                        $( window.dfp ).trigger( 'complete' );
+                    }
+                });
                 
                 /**
                  * If the ad tags have elements around them, then it's best to collapse
