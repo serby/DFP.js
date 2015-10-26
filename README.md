@@ -6,6 +6,13 @@ The DFP.js to library aim is simplify the implementation of DFP and provide some
 
 # Releases
 
+## Release 1.4.1
+
+* The new events now only fire if the Content of the slot has actually changed.
+  * There could be a deficiency here for apps which need to reload new ads into pre-existing slots. 
+* This fixes an issue where AJAX'd adverts did not fire the "Complete" event properly.
+* Removed "Complete" event debug code which is no longer needed.
+
 ## Release 1.4.0 - Events
 
 * Added support for Google Publisher Tag "SlotRenderEndedEvent"
