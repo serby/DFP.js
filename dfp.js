@@ -1,5 +1,5 @@
 /**
- * DFP.js 1.4.1
+ * DFP.js 1.4.2
  * 
  * Copyright (c) 2015 Cameron Terry
  * 
@@ -46,12 +46,15 @@ googletag.cmd = googletag.cmd || [];
         collapsable : false,
         video : false,
         ad_slots : [],
+        ad_slots_processed : 0,
         ad_slots_requested : 0,
-        ad_slots_rendered : 0,
         network : '',
         targeting_all : [],
         zone : '',
         defineSlots : function () {
+            dfp.ad_slots_processed = 0;
+            dfp.ad_slots_requested = $( 'div[rel="advert"]:visible' ).length;
+
             $( 'div[rel="advert"][data-ad-complete!="yes"]:visible' ).each( function () {
                 var $this = $( this );
                 var id = dfp.getID( $this );
@@ -68,8 +71,7 @@ googletag.cmd = googletag.cmd || [];
                 dfp.setCompanionSingle( $this.data( 'companion' ), advert );
 
                 advert.addService( googletag.pubads() );
-                
-                dfp.ad_slots_requested++;
+
                 dfp.ad_slots[id] = advert;
             });
         },
@@ -168,6 +170,8 @@ googletag.cmd = googletag.cmd || [];
                  * https://developers.google.com/doubleclick-gpt/reference#googletag.Service_addEventListener
                  */
                 googletag.pubads().addEventListener( 'slotRenderEnded', function( slot_data ) {
+                    dfp.ad_slots_processed++;
+
                     /** 
                      * Retrieve the actual HTML element attached to the slot. This is used to
                      * return as part of the event trigger as well as to trigger events on the
@@ -187,29 +191,24 @@ googletag.cmd = googletag.cmd || [];
                         size : slot_data.size,
                     };
 
-                    /** Make sure DFP actually changed the slot before firing off events. */
-                    if ( false === slot_data.slotContentChanged ) {
-                        dfp.ad_slots_rendered++;
+                    var render_event = $.Event( 'rendered' );
+                    /** Fire the event for the actual advert element being rendered. */
+                    $slot_element.trigger( render_event, slot_data );
 
-                        var render_event = $.Event( 'rendered' );
-                        /** Fire the event for the actual advert element being rendered. */
-                        $slot_element.trigger( render_event, slot_data );
-
-                        /**
-                         * Save other developers of adverts is empty if statements and fire a
-                         * separate event.
-                         */
-                        if ( slot_data.isEmpty ) {
-                            var empty_event = $.Event( 'empty' );
-                            $slot_element.trigger( empty_event, slot_data );
-                        }
-
-                        /** Catch all event to say an ad slot is rendered. */
-                        $( window.dfp ).trigger( 'slot_rendered', slot_data );
+                    /**
+                     * Save other developers of adverts is empty if statements and fire a
+                     * separate event.
+                     */
+                    if ( slot_data.isEmpty ) {
+                        var empty_event = $.Event( 'empty' );
+                        $slot_element.trigger( empty_event, slot_data );
                     }
-                    
+
+                    /** Catch all event to say an ad slot is rendered. */
+                    $( window.dfp ).trigger( 'slot_rendered', slot_data );
+
                     /** Trigger an event which says all Ads on the page have been rendered. */
-                    if ( dfp.ad_slots_rendered === dfp.ad_slots_requested ) {
+                    if ( dfp.ad_slots_requested === dfp.ad_slots_processed ) {
                         $( window.dfp ).trigger( 'complete' );
                     }
                 });
