@@ -8,6 +8,14 @@ Uglify makes use of; https://skalman.github.io/UglifyJS-online/
 
 # Releases
 
+## Release 1.4.2
+
+* Reworked the counting mechanism used to determine when the "Complete" event should be triggered.
+  * Now determined by comparing adverts processed and adverts which are visible.
+  * Adverts processed is reset for every call to defineSlots(), which includes dfp.cycle() used for dynamically included adverts.
+  * This is because DFP fires the slotRenderedEvent for all adverts when googletag.pubads().refresh( array ) is called.
+  * In turn, it was causing the processed count to increase exponentially and confuse the logic for the "Complete" event.
+
 ## Release 1.4.1
 
 * The new events now only fire if the Content of the slot has actually changed.
