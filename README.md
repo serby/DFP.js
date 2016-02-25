@@ -4,7 +4,11 @@ Built from hard knocks and frustration over several years of trying to get it to
 
 The DFP.js to library aim is simplify the implementation of DFP and provide some much needed flexibility when advertising managers decide to have random positions or random sizes!
 
-Uglify makes use of; https://skalman.github.io/UglifyJS-online/
+You can create a minified version for distribution using gulp, which will create `dfp.min.js`
+
+```sh
+gulp compress
+```
 
 # Releases
 
@@ -19,7 +23,7 @@ Uglify makes use of; https://skalman.github.io/UglifyJS-online/
 ## Release 1.4.1
 
 * The new events now only fire if the Content of the slot has actually changed.
-  * There could be a deficiency here for apps which need to reload new ads into pre-existing slots. 
+  * There could be a deficiency here for apps which need to reload new ads into pre-existing slots.
 * Fixed an issue where the "Complete" event to fire incorrectly for the dfp.cycle() method was used for AJAX'd adverts.
 * Removed "Complete" event debug code which is no longer needed.
 
@@ -126,7 +130,7 @@ If you wish to serve an MPU or double MPU in the same place, just add specify th
 
 ```html
 <div rel="advert" data-sizes="300x250,300x600"></div>
-``` 
+```
 
 ### Set Targeting for All Slots
 

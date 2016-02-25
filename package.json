@@ -1,0 +1,27 @@
+{
+  "name": "dfp",
+  "version": "1.4.2",
+  "description": "The DFP.js to library aim is simplify the implementation of DFP and provide some much needed flexibility when advertising managers decide to have random positions or random sizes!",
+  "main": "dfp.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cameronterry/DFP.js.git"
+  },
+  "keywords": [
+    "google",
+    "dfp",
+    "adverts"
+  ],
+  "author": "Cameron Terry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cameronterry/DFP.js/issues"
+  },
+  "homepage": "https://github.com/cameronterry/DFP.js#Readme.md",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+   }
+}
