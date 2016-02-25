@@ -137,7 +137,7 @@ googletag.cmd = googletag.cmd || [];
         display : function () {
             var return_val = [];
 
-            $( 'div[rel="advert"][data-ad-complete!="yes"]' ).each( function () {
+            $( 'div[rel="advert"][data-ad-complete!="yes"]:visible' ).each( function () {
                 var $this = $( this );
                 var ad_id = $this.attr( 'id' );
 
