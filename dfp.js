@@ -1,18 +1,18 @@
 /**
  * DFP.js 1.4.2
- * 
+ *
  * Copyright (c) 2015 Cameron Terry
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -66,7 +66,7 @@ googletag.cmd = googletag.cmd || [];
                 else {
                     advert = googletag.defineSlot( dfp.network + dfp.zone, dfp.getSizes( $this.data( 'sizes' ) ), id );
                 }
-                
+
                 dfp.setTargetingSingle( $this.data( 'targeting' ), advert );
                 dfp.setCompanionSingle( $this.data( 'companion' ), advert );
 
@@ -155,7 +155,7 @@ googletag.cmd = googletag.cmd || [];
             googletag.cmd.push( function () {
                 dfp.defineSlots();
                 dfp.setTargetingAll();
-                
+
                 googletag.pubads().enableAsyncRendering();
 
                 /**
@@ -172,7 +172,7 @@ googletag.cmd = googletag.cmd || [];
                 googletag.pubads().addEventListener( 'slotRenderEnded', function( slot_data ) {
                     dfp.ad_slots_processed++;
 
-                    /** 
+                    /**
                      * Retrieve the actual HTML element attached to the slot. This is used to
                      * return as part of the event trigger as well as to trigger events on the
                      * actual slot itself, so developer's can target an advert specifically
@@ -212,7 +212,7 @@ googletag.cmd = googletag.cmd || [];
                         $( window.dfp ).trigger( 'complete' );
                     }
                 });
-                
+
                 /**
                  * If the ad tags have elements around them, then it's best to collapse
                  * the ad tag so that the rest of the elements move into it's place.  This
